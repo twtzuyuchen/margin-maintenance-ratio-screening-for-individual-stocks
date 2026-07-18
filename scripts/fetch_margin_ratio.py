@@ -37,7 +37,9 @@
  - 台灣證券交易所 OpenAPI（https://openapi.twse.com.tw/）（僅用於加速：
    批次取得上市股票「今日收盤價」與「今日融資餘額」，用來預先篩掉目前沒有
    融資餘額 / 不在使用者指定股價區間內的股票，減少呼叫 FinMind 的次數）
-   若此輔助來源連線失敗，程式會自動退回「全部改用 FinMind 逐檔查詢」，
+ - 證券櫃檯買賣中心（TPEx，上櫃）網站前端 JSON API（非正式 OpenAPI 文件端點，
+   參考開源專案 chunkai1312/node-twstock 的實作方式），功能同上、用於上櫃股票。
+   若此輔助來源連線失敗或格式改變，程式會自動退回「全部改用 FinMind 逐檔查詢」，
    不影響正確性，只是速度變慢。
 
 環境變數（皆為選填，未設定則使用預設值）
@@ -235,6 +237,90 @@ def fetch_twse_bulk_snapshot() -> dict:
 
 
 # --------------------------------------------------------------------------
+# 輔助：批次抓取 TPEx 上櫃股票今日收盤價 + 融資餘額（同上，用來預先篩選）
+# --------------------------------------------------------------------------
+
+TPEX_DAILY_QUOTES = "https://www.tpex.org.tw/www/zh-tw/afterTrading/dailyQuotes"
+TPEX_MARGIN_BALANCE = "https://www.tpex.org.tw/www/zh-tw/margin/balance"
+
+
+def _tpex_num(v) -> Optional[float]:
+    if v in (None, "", "---", "--"):
+        return None
+    try:
+        return float(str(v).replace(",", ""))
+    except ValueError:
+        return None
+
+
+def _fetch_tpex_table(url: str, date_str: str) -> Optional[list]:
+    r = _session.get(url, params={"date": date_str, "response": "json"}, timeout=30)
+    r.raise_for_status()
+    payload = r.json()
+    tables = payload.get("tables") or []
+    if not tables or not tables[0].get("totalCount"):
+        return None
+    return tables[0].get("data") or []
+
+
+def fetch_tpex_bulk_snapshot() -> dict:
+    """回傳 {stock_id: {"close": float, "balance": float}}；失敗則回傳空 dict（自動退回逐檔模式）。
+
+    資料來源為櫃買中心網站前端使用的 JSON API（afterTrading/dailyQuotes 與
+    margin/balance），非官方 OpenAPI 文件正式列出的端點，格式參考自開源專案
+    chunkai1312/node-twstock 的實作。若櫃買中心未來調整此格式，這個函式會
+    fail-soft（回傳空 dict），程式會自動退回「上櫃股票逐檔查詢 FinMind」，
+    不影響正確性，只是速度變慢。
+    """
+    snapshot: dict = {}
+
+    # 往回找最近一個有資料的交易日（假日/尚未收盤時會是空的）
+    quotes_rows = None
+    used_date = None
+    for back in range(0, 6):
+        d = datetime.now(TAIPEI_TZ) - timedelta(days=back)
+        date_str = d.strftime("%Y/%m/%d")
+        try:
+            rows = _fetch_tpex_table(TPEX_DAILY_QUOTES, date_str)
+        except Exception as exc:
+            print(f"[info] TPEx dailyQuotes 查詢 {date_str} 失敗 ({exc})；將略過上櫃預先篩選。")
+            return {}
+        if rows:
+            quotes_rows = rows
+            used_date = date_str
+            break
+
+    if not quotes_rows:
+        print("[info] TPEx dailyQuotes 找不到近期交易日資料；將略過上櫃預先篩選。")
+        return {}
+
+    for row in quotes_rows:
+        if not row or len(row) < 3:
+            continue
+        symbol, name, *values = row
+        close = _tpex_num(values[0]) if len(values) > 0 else None
+        if symbol and close is not None:
+            snapshot[symbol.strip()] = {"close": close, "balance": None}
+
+    try:
+        margin_rows = _fetch_tpex_table(TPEX_MARGIN_BALANCE, used_date) or []
+        for row in margin_rows:
+            if not row or len(row) < 5:
+                continue
+            symbol, name, *values = row
+            symbol = symbol.strip()
+            balance = _tpex_num(values[4]) if len(values) > 4 else None  # marginBalance
+            if symbol in snapshot and balance is not None:
+                snapshot[symbol]["balance"] = balance
+    except Exception as exc:
+        print(f"[info] TPEx margin/balance 查詢失敗 ({exc})；將略過上櫃零融資餘額預先篩選"
+              f"（收盤價預先篩選仍會生效）。")
+
+    print(f"      TPEx 快照使用交易日: {used_date}")
+    return snapshot
+
+
+# --------------------------------------------------------------------------
 # 主要資料結構
 # --------------------------------------------------------------------------
 
@@ -377,18 +463,30 @@ def main():
 
     universe = get_stock_universe()
 
-    print("[2/4] 批次預先取得上市股票今日收盤價 / 融資餘額（加速篩選）...")
-    twse_snapshot = fetch_twse_bulk_snapshot()
-    if twse_snapshot:
-        print(f"      取得 {len(twse_snapshot)} 檔上市股票快照")
-    else:
-        print("      略過（將對所有股票逐檔向 FinMind 查詢）")
+    print("[2/4] 批次預先取得上市／上櫃股票今日收盤價 / 融資餘額（加速篩選）...")
+    bulk_snapshot = {}
+
+    if "twse" in MARKETS:
+        twse_snapshot = fetch_twse_bulk_snapshot()
+        if twse_snapshot:
+            print(f"      取得 {len(twse_snapshot)} 檔上市股票快照")
+        else:
+            print("      上市快照略過（將對所有上市股票逐檔向 FinMind 查詢）")
+        bulk_snapshot.update(twse_snapshot)
+
+    if "tpex" in MARKETS:
+        tpex_snapshot = fetch_tpex_bulk_snapshot()
+        if tpex_snapshot:
+            print(f"      取得 {len(tpex_snapshot)} 檔上櫃股票快照")
+        else:
+            print("      上櫃快照略過（將對所有上櫃股票逐檔向 FinMind 查詢）")
+        bulk_snapshot.update(tpex_snapshot)
 
     candidates = []
     skipped_prefilter = 0
     for info in universe:
         sid = info["stock_id"]
-        snap = twse_snapshot.get(sid)
+        snap = bulk_snapshot.get(sid)
         if snap is not None:
             price = snap.get("close")
             balance = snap.get("balance")
