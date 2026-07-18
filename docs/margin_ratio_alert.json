@@ -1,0 +1,68 @@
+{
+  "generated_at": "2026-07-18T23:10:16.515499+08:00",
+  "threshold": 130.0,
+  "lookback_days": 60,
+  "count": 5,
+  "stocks": [
+    {
+      "stock_id": "0051",
+      "stock_name": "元大中型100",
+      "market": "twse",
+      "industry": "ETF",
+      "close_price": 135.6,
+      "margin_balance_lots": 3.0,
+      "est_cost": 147.57,
+      "financing_ratio": 0.9,
+      "ratio_pct": 102.1,
+      "note": " "
+    },
+    {
+      "stock_id": "00762",
+      "stock_name": "元大全球AI",
+      "market": "twse",
+      "industry": "ETF",
+      "close_price": 106.0,
+      "margin_balance_lots": 63.0,
+      "est_cost": 114.47,
+      "financing_ratio": 0.9,
+      "ratio_pct": 102.89,
+      "note": " "
+    },
+    {
+      "stock_id": "0050",
+      "stock_name": "元大台灣50",
+      "market": "twse",
+      "industry": "ETF",
+      "close_price": 100.15,
+      "margin_balance_lots": 18333.0,
+      "est_cost": 104.14,
+      "financing_ratio": 0.9,
+      "ratio_pct": 106.86,
+      "note": "X "
+    },
+    {
+      "stock_id": "00757",
+      "stock_name": "統一FANG+",
+      "market": "twse",
+      "industry": "ETF",
+      "close_price": 130.35,
+      "margin_balance_lots": 276.0,
+      "est_cost": 129.03,
+      "financing_ratio": 0.9,
+      "ratio_pct": 112.25,
+      "note": " "
+    },
+    {
+      "stock_id": "00662",
+      "stock_name": "富邦NASDAQ",
+      "market": "twse",
+      "industry": "ETF",
+      "close_price": 118.85,
+      "margin_balance_lots": 1291.0,
+      "est_cost": 111.48,
+      "financing_ratio": 0.9,
+      "ratio_pct": 118.46,
+      "note": " "
+    }
+  ]
+}
