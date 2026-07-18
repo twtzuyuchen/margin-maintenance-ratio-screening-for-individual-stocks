@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-07-18T23:10:16.515499+08:00",
+  "generated_at": "2026-07-18T23:21:10.263642+08:00",
   "threshold": 130.0,
   "lookback_days": 60,
-  "count": 5,
+  "count": 30,
   "stocks": [
     {
       "stock_id": "0051",
@@ -29,6 +29,30 @@
       "note": " "
     },
     {
+      "stock_id": "6706",
+      "stock_name": "惠特",
+      "market": "twse",
+      "industry": "電子工業",
+      "close_price": 110.5,
+      "margin_balance_lots": 8502.0,
+      "est_cost": 178.32,
+      "financing_ratio": 0.6,
+      "ratio_pct": 103.28,
+      "note": " "
+    },
+    {
+      "stock_id": "3581",
+      "stock_name": "博磊",
+      "market": "tpex",
+      "industry": "半導體業",
+      "close_price": 115.5,
+      "margin_balance_lots": 1716.0,
+      "est_cost": 182.03,
+      "financing_ratio": 0.6,
+      "ratio_pct": 105.75,
+      "note": "11   A"
+    },
+    {
       "stock_id": "0050",
       "stock_name": "元大台灣50",
       "market": "twse",
@@ -39,6 +63,54 @@
       "financing_ratio": 0.9,
       "ratio_pct": 106.86,
       "note": "X "
+    },
+    {
+      "stock_id": "3138",
+      "stock_name": "耀登",
+      "market": "twse",
+      "industry": "電子工業",
+      "close_price": 100.5,
+      "margin_balance_lots": 2539.0,
+      "est_cost": 156.12,
+      "financing_ratio": 0.6,
+      "ratio_pct": 107.29,
+      "note": "X "
+    },
+    {
+      "stock_id": "4977",
+      "stock_name": "眾達-KY",
+      "market": "twse",
+      "industry": "通信網路業",
+      "close_price": 130.0,
+      "margin_balance_lots": 6915.0,
+      "est_cost": 201.46,
+      "financing_ratio": 0.6,
+      "ratio_pct": 107.55,
+      "note": "X "
+    },
+    {
+      "stock_id": "6785",
+      "stock_name": "昱展新藥",
+      "market": "tpex",
+      "industry": "生技醫療業",
+      "close_price": 109.0,
+      "margin_balance_lots": 1042.0,
+      "est_cost": 167.79,
+      "financing_ratio": 0.6,
+      "ratio_pct": 108.27,
+      "note": ""
+    },
+    {
+      "stock_id": "6568",
+      "stock_name": "宏觀",
+      "market": "tpex",
+      "industry": "半導體業",
+      "close_price": 140.0,
+      "margin_balance_lots": 1078.0,
+      "est_cost": 208.67,
+      "financing_ratio": 0.6,
+      "ratio_pct": 111.82,
+      "note": "X"
     },
     {
       "stock_id": "00757",
@@ -53,6 +125,42 @@
       "note": " "
     },
     {
+      "stock_id": "3555",
+      "stock_name": "博士旺",
+      "market": "tpex",
+      "industry": "半導體業",
+      "close_price": 142.0,
+      "margin_balance_lots": 764.0,
+      "est_cost": 210.25,
+      "financing_ratio": 0.6,
+      "ratio_pct": 112.56,
+      "note": "11    B"
+    },
+    {
+      "stock_id": "4908",
+      "stock_name": "前鼎",
+      "market": "tpex",
+      "industry": "通信網路業",
+      "close_price": 138.0,
+      "margin_balance_lots": 2455.0,
+      "est_cost": 202.26,
+      "financing_ratio": 0.6,
+      "ratio_pct": 113.72,
+      "note": "61      D"
+    },
+    {
+      "stock_id": "6854",
+      "stock_name": "錼創科技-KY創",
+      "market": "twse",
+      "industry": "電子工業",
+      "close_price": 103.0,
+      "margin_balance_lots": 3541.0,
+      "est_cost": 146.64,
+      "financing_ratio": 0.6,
+      "ratio_pct": 117.07,
+      "note": " "
+    },
+    {
       "stock_id": "00662",
       "stock_name": "富邦NASDAQ",
       "market": "twse",
@@ -62,6 +170,198 @@
       "est_cost": 111.48,
       "financing_ratio": 0.9,
       "ratio_pct": 118.46,
+      "note": " "
+    },
+    {
+      "stock_id": "8467",
+      "stock_name": "波力-KY",
+      "market": "twse",
+      "industry": "運動休閒",
+      "close_price": 102.5,
+      "margin_balance_lots": 256.0,
+      "est_cost": 143.43,
+      "financing_ratio": 0.6,
+      "ratio_pct": 119.11,
+      "note": " "
+    },
+    {
+      "stock_id": "3715",
+      "stock_name": "定穎投控",
+      "market": "twse",
+      "industry": "電子工業",
+      "close_price": 123.5,
+      "margin_balance_lots": 23282.0,
+      "est_cost": 171.85,
+      "financing_ratio": 0.6,
+      "ratio_pct": 119.77,
+      "note": " "
+    },
+    {
+      "stock_id": "2375",
+      "stock_name": "凱美",
+      "market": "twse",
+      "industry": "電子零組件業",
+      "close_price": 148.5,
+      "margin_balance_lots": 7900.0,
+      "est_cost": 201.53,
+      "financing_ratio": 0.6,
+      "ratio_pct": 122.81,
+      "note": " "
+    },
+    {
+      "stock_id": "6895",
+      "stock_name": "宏碩系統",
+      "market": "tpex",
+      "industry": "半導體業",
+      "close_price": 124.5,
+      "margin_balance_lots": 991.0,
+      "est_cost": 166.8,
+      "financing_ratio": 0.6,
+      "ratio_pct": 124.4,
+      "note": "X"
+    },
+    {
+      "stock_id": "1785",
+      "stock_name": "光洋科",
+      "market": "tpex",
+      "industry": "其他電子類",
+      "close_price": 107.5,
+      "margin_balance_lots": 34645.0,
+      "est_cost": 143.73,
+      "financing_ratio": 0.6,
+      "ratio_pct": 124.66,
+      "note": "X"
+    },
+    {
+      "stock_id": "8042",
+      "stock_name": "金山電",
+      "market": "tpex",
+      "industry": "電子零組件業",
+      "close_price": 129.5,
+      "margin_balance_lots": 5478.0,
+      "est_cost": 172.78,
+      "financing_ratio": 0.6,
+      "ratio_pct": 124.92,
+      "note": "11   A"
+    },
+    {
+      "stock_id": "8227",
+      "stock_name": "巨有科技",
+      "market": "tpex",
+      "industry": "半導體業",
+      "close_price": 148.0,
+      "margin_balance_lots": 2155.0,
+      "est_cost": 196.01,
+      "financing_ratio": 0.6,
+      "ratio_pct": 125.85,
+      "note": "X"
+    },
+    {
+      "stock_id": "3135",
+      "stock_name": "凌航",
+      "market": "twse",
+      "industry": "電子工業",
+      "close_price": 144.5,
+      "margin_balance_lots": 2272.0,
+      "est_cost": 188.64,
+      "financing_ratio": 0.6,
+      "ratio_pct": 127.67,
+      "note": " "
+    },
+    {
+      "stock_id": "8043",
+      "stock_name": "蜜望實",
+      "market": "tpex",
+      "industry": "電子零組件業",
+      "close_price": 141.0,
+      "margin_balance_lots": 4921.0,
+      "est_cost": 183.78,
+      "financing_ratio": 0.6,
+      "ratio_pct": 127.87,
+      "note": "11   A C"
+    },
+    {
+      "stock_id": "3305",
+      "stock_name": "昇貿",
+      "market": "twse",
+      "industry": "其他電子業",
+      "close_price": 109.0,
+      "margin_balance_lots": 7680.0,
+      "est_cost": 141.74,
+      "financing_ratio": 0.6,
+      "ratio_pct": 128.16,
+      "note": " "
+    },
+    {
+      "stock_id": "3691",
+      "stock_name": "碩禾",
+      "market": "tpex",
+      "industry": "光電業",
+      "close_price": 117.5,
+      "margin_balance_lots": 3149.0,
+      "est_cost": 152.31,
+      "financing_ratio": 0.6,
+      "ratio_pct": 128.58,
+      "note": "X"
+    },
+    {
+      "stock_id": "2755",
+      "stock_name": "揚秦",
+      "market": "tpex",
+      "industry": "觀光餐旅",
+      "close_price": 105.0,
+      "margin_balance_lots": 95.0,
+      "est_cost": 135.95,
+      "financing_ratio": 0.6,
+      "ratio_pct": 128.73,
+      "note": "X"
+    },
+    {
+      "stock_id": "8086",
+      "stock_name": "宏捷科",
+      "market": "tpex",
+      "industry": "半導體業",
+      "close_price": 118.5,
+      "margin_balance_lots": 9237.0,
+      "est_cost": 152.95,
+      "financing_ratio": 0.6,
+      "ratio_pct": 129.13,
+      "note": ""
+    },
+    {
+      "stock_id": "7712",
+      "stock_name": "博盛半導體",
+      "market": "tpex",
+      "industry": "半導體業",
+      "close_price": 144.5,
+      "margin_balance_lots": 1365.0,
+      "est_cost": 186.41,
+      "financing_ratio": 0.6,
+      "ratio_pct": 129.19,
+      "note": "X"
+    },
+    {
+      "stock_id": "6230",
+      "stock_name": "尼得科超眾",
+      "market": "twse",
+      "industry": "電腦及週邊設備業",
+      "close_price": 113.0,
+      "margin_balance_lots": 468.0,
+      "est_cost": 145.1,
+      "financing_ratio": 0.6,
+      "ratio_pct": 129.79,
+      "note": " "
+    },
+    {
+      "stock_id": "2478",
+      "stock_name": "大毅",
+      "market": "twse",
+      "industry": "電子零組件業",
+      "close_price": 142.5,
+      "margin_balance_lots": 8188.0,
+      "est_cost": 182.75,
+      "financing_ratio": 0.6,
+      "ratio_pct": 129.96,
       "note": " "
     }
   ]
