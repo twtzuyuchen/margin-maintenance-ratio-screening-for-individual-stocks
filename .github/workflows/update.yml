@@ -1,0 +1,71 @@
+name: 更新台股融資維持率篩選網頁
+
+on:
+  schedule:
+    # 週一到週五 台北時間 21:30 執行（UTC 13:30），此時當日融資融券資料通常已更新
+    - cron: "30 13 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      margin_ratio_threshold:
+        description: "篩選門檻（維持率 < 多少 %）"
+        required: false
+        default: "130"
+      price_min:
+        description: "股價下限（留空 = 不限制）"
+        required: false
+        default: ""
+      price_max:
+        description: "股價上限（留空 = 不限制）"
+        required: false
+        default: ""
+      stock_limit:
+        description: "測試用：只處理前 N 檔股票（0 = 不限制，正式跑請設 0）"
+        required: false
+        default: "0"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-margin-ratio
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: 執行融資維持率估算腳本
+        env:
+          FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
+          MARGIN_RATIO_THRESHOLD: ${{ github.event.inputs.margin_ratio_threshold || '130' }}
+          PRICE_MIN: ${{ github.event.inputs.price_min }}
+          PRICE_MAX: ${{ github.event.inputs.price_max }}
+          STOCK_LIMIT: ${{ github.event.inputs.stock_limit || '0' }}
+          MARKETS: "twse,tpex"
+          LOOKBACK_DAYS: "60"
+          OUTPUT_DIR: "docs"
+        run: python scripts/fetch_margin_ratio.py
+
+      - name: Commit 並推送更新後的網頁
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/
+          if git diff --cached --quiet; then
+            echo "沒有變動，略過 commit"
+          else
+            git commit -m "chore: update margin ratio page ($(date -u '+%Y-%m-%d %H:%M UTC'))"
+            git push
+          fi
